@@ -1,10 +1,10 @@
-# pagespool API — GitHub Action
+# Pagespool API — GitHub Action
 
 Seven open-source document engines behind one API key: Docling, MarkItDown, WeasyPrint, veraPDF, Gotenberg, OCRmyPDF, EPUBCheck.
 
-pagespool hosts seven open-source document engines under their own names: Docling, MarkItDown, WeasyPrint, veraPDF, Gotenberg, OCRmyPDF and EPUBCheck. Each engine has its own REST API, MCP server and free tool, and one API key and one credit balance pay for all seven. Docling, veraPDF and Gotenberg answer on their own routes, so their clients work with a new base URL. The servers are in Germany. The free plan has 100 credits a month and needs no card.
+Pagespool hosts seven open-source document engines under their own names: Docling, MarkItDown, WeasyPrint, veraPDF, Gotenberg, OCRmyPDF and EPUBCheck. Each engine has its own REST API, MCP server and web tool, and one API key works for all seven. Docling, veraPDF and Gotenberg answer on their own routes, so their clients work with a new base URL. The servers are in Germany.
 
-Calls the [pagespool API](https://pagespool.com) from a workflow: every operation, one step each. Jobs are waited for and their result is downloaded.
+Calls the [Pagespool API](https://pagespool.com) from a workflow: every operation, one step each. Jobs are waited for and their result is downloaded.
 
 ## Get an API key
 
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: pagespool-com/pagespool-action@v1.0.0
+      - uses: pagespool-com/pagespool-action@v1.0.1
         with:
           operation: get_me
           api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -33,7 +33,7 @@ jobs:
 | `file` | no |  | Path of the file to upload, for operations that take one. An operation that takes several files takes one path per line. |
 | `json` | no |  | The request body as a JSON object, for operations that take one. |
 | `query` | no |  | Path, query and form parameters, one key=value per line; repeat a key for a list. An operation with free form fields takes any further key as one. |
-| `api-key` | no |  | Your pagespool API key, from a secret. Optional: without one the anonymous tier's lower limits apply; a key raises them. Create one at https://pagespool.com/go/gh-action?to=/app/api-keys |
+| `api-key` | no |  | Your Pagespool API key, from a secret. Optional: without one the anonymous tier's lower limits apply; a key raises them. Create one at https://pagespool.com/go/gh-action?to=/app/api-keys |
 | `output` | no |  | Where to write the answer (default: a file in the runner's temp directory, named after the operation). |
 | `fail-if` | no |  | A jq expression on a JSON answer; the step fails when it is true (e.g. `.valid == false`). |
 | `base-url` | no | `https://api.pagespool.com` | The API base URL. |
@@ -52,7 +52,7 @@ jobs:
 Your plan, remaining requests, and remaining credits — `GET /v1/me`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: get_me
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -63,7 +63,7 @@ Your plan, remaining requests, and remaining credits — `GET /v1/me`.
 Get one queued job by ID — `GET /v1/jobs/{job_id}`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: get_job
     query: |
@@ -76,7 +76,7 @@ Get one queued job by ID — `GET /v1/jobs/{job_id}`.
 List your queued jobs, newest first — `GET /v1/jobs`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: list_jobs
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -88,7 +88,7 @@ Check an EPUB file with EPUBCheck — `POST /v1/epubcheck/check`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: epubcheck_check
     file: path/to/file
@@ -102,7 +102,7 @@ Submits a job, polls `get_job` until it is done and downloads `ocrmypdf_get_resu
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: ocrmypdf_submit
     file: path/to/file
@@ -114,7 +114,7 @@ Costs 2 credits.
 Download the searchable PDF of an OCR job — `GET /v1/ocrmypdf/jobs/{job_id}/result`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: ocrmypdf_get_result
     query: |
@@ -128,7 +128,7 @@ Convert an HTML file to PDF with Chromium — `POST /v1/gotenberg/forms/chromium
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_chromium_convert_html
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -140,7 +140,7 @@ Convert a web page to PDF with Chromium — `POST /v1/gotenberg/forms/chromium/c
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_chromium_convert_url
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -152,7 +152,7 @@ Convert Markdown files to PDF with Chromium — `POST /v1/gotenberg/forms/chromi
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_chromium_convert_markdown
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -164,7 +164,7 @@ Screenshot an HTML file with Chromium — `POST /v1/gotenberg/forms/chromium/scr
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_chromium_screenshot_html
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -176,7 +176,7 @@ Screenshot a web page with Chromium — `POST /v1/gotenberg/forms/chromium/scree
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_chromium_screenshot_url
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -188,7 +188,7 @@ Screenshot Markdown files with Chromium — `POST /v1/gotenberg/forms/chromium/s
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_chromium_screenshot_markdown
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -200,7 +200,7 @@ Convert office documents to PDF with LibreOffice — `POST /v1/gotenberg/forms/l
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_libreoffice_convert
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -212,7 +212,7 @@ Run a list of stages on PDFs — `POST /v1/gotenberg/forms/pdf/pipe`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_pipe
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -224,7 +224,7 @@ Read the page count and properties of PDFs — `POST /v1/gotenberg/forms/pdf/inf
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_info
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -236,7 +236,7 @@ Merge PDFs — `POST /v1/gotenberg/forms/pdf/merge`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_merge
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -248,7 +248,7 @@ Split PDFs — `POST /v1/gotenberg/forms/pdf/split`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_split
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -260,7 +260,7 @@ Keep selected pages of PDFs — `POST /v1/gotenberg/forms/pdf/select`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_select
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -272,7 +272,7 @@ Delete pages of PDFs — `POST /v1/gotenberg/forms/pdf/delete`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_delete
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -284,7 +284,7 @@ Insert pages into PDFs — `POST /v1/gotenberg/forms/pdf/insert`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_insert
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -296,7 +296,7 @@ Rotate the pages of PDFs — `POST /v1/gotenberg/forms/pdf/rotate`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_rotate
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -308,7 +308,7 @@ Compose pages of PDFs on new pages — `POST /v1/gotenberg/forms/pdf/compose`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_compose
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -320,7 +320,7 @@ Render the pages of PDFs as images — `POST /v1/gotenberg/forms/pdf/render`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_render
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -332,7 +332,7 @@ Stamp text on PDFs — `POST /v1/gotenberg/forms/pdf/stamp-text`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_stamp_text
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -344,7 +344,7 @@ Stamp an image on PDFs — `POST /v1/gotenberg/forms/pdf/stamp-image`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_stamp_image
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -356,7 +356,7 @@ Stamp a PDF page on PDFs — `POST /v1/gotenberg/forms/pdf/stamp-pdf`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_stamp_pdf
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -368,7 +368,7 @@ Read the metadata of PDFs — `POST /v1/gotenberg/forms/pdf/metadata`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_metadata
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -380,7 +380,7 @@ Write the metadata of PDFs — `POST /v1/gotenberg/forms/pdf/set-metadata`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_set_metadata
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -392,7 +392,7 @@ Read the bookmarks of PDFs — `POST /v1/gotenberg/forms/pdf/bookmarks`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_bookmarks
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -404,7 +404,7 @@ Write the bookmarks of PDFs — `POST /v1/gotenberg/forms/pdf/set-bookmarks`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_set_bookmarks
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -416,7 +416,7 @@ Attach files to PDFs — `POST /v1/gotenberg/forms/pdf/attach`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_attach
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -428,7 +428,7 @@ List the attachments of PDFs — `POST /v1/gotenberg/forms/pdf/attachments`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_attachments
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -440,7 +440,7 @@ Remove an attachment from PDFs — `POST /v1/gotenberg/forms/pdf/detach`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_detach
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -452,7 +452,7 @@ Extract the attachments of PDFs — `POST /v1/gotenberg/forms/pdf/extract-attach
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_extract_attachments
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -464,7 +464,7 @@ List the form fields of PDFs — `POST /v1/gotenberg/forms/pdf/form`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_form
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -476,7 +476,7 @@ Fill the form fields of PDFs — `POST /v1/gotenberg/forms/pdf/set-form`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_set_form
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -488,7 +488,7 @@ Flatten the form fields of PDFs — `POST /v1/gotenberg/forms/pdf/flatten-form`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_flatten_form
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -500,7 +500,7 @@ Extract the text of PDFs — `POST /v1/gotenberg/forms/pdf/extract-text`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_extract_text
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -512,7 +512,7 @@ Redact content from PDFs — `POST /v1/gotenberg/forms/pdf/redact`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_redact
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -524,7 +524,7 @@ Optimize PDFs — `POST /v1/gotenberg/forms/pdf/optimize`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_optimize
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -536,7 +536,7 @@ Convert the colors of PDFs — `POST /v1/gotenberg/forms/pdf/convert-colors`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_convert_colors
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -548,7 +548,7 @@ Flatten the transparency of PDFs — `POST /v1/gotenberg/forms/pdf/flatten-trans
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_flatten_transparency
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -560,7 +560,7 @@ Make PDFs conform to PDF/A or PDF/UA — `POST /v1/gotenberg/forms/pdf/remediate
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_remediate
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -572,7 +572,7 @@ Validate PDFs against PDF/A or PDF/UA — `POST /v1/gotenberg/forms/pdf/validate
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_validate
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -584,7 +584,7 @@ Add structure tags to PDFs — `POST /v1/gotenberg/forms/pdf/autotag`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_autotag
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -596,7 +596,7 @@ Encrypt PDFs — `POST /v1/gotenberg/forms/pdf/encrypt`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_encrypt
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -608,7 +608,7 @@ Decrypt PDFs — `POST /v1/gotenberg/forms/pdf/decrypt`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_decrypt
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -620,7 +620,7 @@ Sign PDFs with a certificate — `POST /v1/gotenberg/forms/pdf/sign`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_sign
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -632,7 +632,7 @@ Timestamp PDFs — `POST /v1/gotenberg/forms/pdf/timestamp`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_pdf_timestamp
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -643,7 +643,7 @@ Costs 1 credit.
 Check that Gotenberg is up — `GET /v1/gotenberg/health`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_health
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -654,7 +654,7 @@ Check that Gotenberg is up — `GET /v1/gotenberg/health`.
 Show Gotenberg's version — `GET /v1/gotenberg/version`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: gotenberg_version
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -666,7 +666,7 @@ Check a PDF against the PDF/A part it declares — `POST /v1/verapdf/api/validat
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_auto
     file: path/to/file
@@ -679,7 +679,7 @@ Check a PDF against PDF/A-1a — `POST /v1/verapdf/api/validate/1a`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_1a
     file: path/to/file
@@ -692,7 +692,7 @@ Check a PDF against PDF/A-1b — `POST /v1/verapdf/api/validate/1b`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_1b
     file: path/to/file
@@ -705,7 +705,7 @@ Check a PDF against PDF/A-2a — `POST /v1/verapdf/api/validate/2a`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_2a
     file: path/to/file
@@ -718,7 +718,7 @@ Check a PDF against PDF/A-2b — `POST /v1/verapdf/api/validate/2b`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_2b
     file: path/to/file
@@ -731,7 +731,7 @@ Check a PDF against PDF/A-2u — `POST /v1/verapdf/api/validate/2u`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_2u
     file: path/to/file
@@ -744,7 +744,7 @@ Check a PDF against PDF/A-3a — `POST /v1/verapdf/api/validate/3a`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_3a
     file: path/to/file
@@ -757,7 +757,7 @@ Check a PDF against PDF/A-3b — `POST /v1/verapdf/api/validate/3b`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_3b
     file: path/to/file
@@ -770,7 +770,7 @@ Check a PDF against PDF/A-3u — `POST /v1/verapdf/api/validate/3u`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_3u
     file: path/to/file
@@ -783,7 +783,7 @@ Check a PDF against PDF/A-4 — `POST /v1/verapdf/api/validate/4`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_4
     file: path/to/file
@@ -796,7 +796,7 @@ Check a PDF against PDF/A-4e — `POST /v1/verapdf/api/validate/4e`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_4e
     file: path/to/file
@@ -809,7 +809,7 @@ Check a PDF against PDF/A-4f — `POST /v1/verapdf/api/validate/4f`.
 Costs 2 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_4f
     file: path/to/file
@@ -822,7 +822,7 @@ Check a PDF against PDF/UA-1 — `POST /v1/verapdf/api/validate/ua1`.
 Costs 10 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_ua1
     file: path/to/file
@@ -835,7 +835,7 @@ Check a PDF against PDF/UA-2 — `POST /v1/verapdf/api/validate/ua2`.
 Costs 10 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_ua2
     file: path/to/file
@@ -848,7 +848,7 @@ Check a PDF against WTPDF 1.0 Accessibility — `POST /v1/verapdf/api/validate/w
 Costs 10 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_wt1a
     file: path/to/file
@@ -861,7 +861,7 @@ Check a PDF against WTPDF 1.0 Reuse — `POST /v1/verapdf/api/validate/wt1r`.
 Costs 10 credits.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_validate_wt1r
     file: path/to/file
@@ -873,7 +873,7 @@ Costs 10 credits.
 Get the veraPDF server's environment — `GET /v1/verapdf/api/info`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_info
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -884,7 +884,7 @@ Get the veraPDF server's environment — `GET /v1/verapdf/api/info`.
 List veraPDF's validation profiles — `GET /v1/verapdf/api/profiles`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_list_profiles
     api-key: ${{ secrets.PAGESPOOL_API_KEY }}
@@ -895,7 +895,7 @@ List veraPDF's validation profiles — `GET /v1/verapdf/api/profiles`.
 Get one veraPDF validation profile — `GET /v1/verapdf/api/profiles/{profile_id}`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: verapdf_get_profile
     query: |
@@ -909,7 +909,7 @@ Render an HTML document to a PDF — `POST /v1/weasyprint/render`.
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: weasyprint_render
     json: |
@@ -926,7 +926,7 @@ Convert a document to Markdown with MarkItDown — `POST /v1/markitdown/convert`
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: markitdown_convert
     file: path/to/file
@@ -939,7 +939,7 @@ Convert an uploaded document, waiting up to 50 s (1 credit per PDF page, 10 per 
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: docling_convert_file
     file: path/to/file
@@ -953,7 +953,7 @@ Submits a job, polls `docling_status_poll` until it is done and downloads `docli
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: docling_convert_file_async
     file: path/to/file
@@ -966,7 +966,7 @@ Convert a document from a URL or base64, waiting up to 50 s (1 credit per PDF pa
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: docling_convert_source
     json: |
@@ -983,7 +983,7 @@ Submits a job, polls `docling_status_poll` until it is done and downloads `docli
 Costs 1 credit.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: docling_convert_source_async
     json: |
@@ -998,7 +998,7 @@ Costs 1 credit.
 Check a conversion — `GET /v1/docling/v1/status/poll/{task_id}`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: docling_status_poll
     query: |
@@ -1011,7 +1011,7 @@ Check a conversion — `GET /v1/docling/v1/status/poll/{task_id}`.
 Download a conversion's result — `GET /v1/docling/v1/result/{task_id}`.
 
 ```yaml
-- uses: pagespool-com/pagespool-action@v1.0.0
+- uses: pagespool-com/pagespool-action@v1.0.1
   with:
     operation: docling_result
     query: |
